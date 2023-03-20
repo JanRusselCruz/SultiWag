@@ -1,0 +1,11 @@
+<AudioRecorder>:
+    orientation: "vertical"
+    Button:
+        text: "Start recording"
+        on_press: root.start_recording()
+    Button:
+        text: "Stop recording"
+        on_press: root.stop_recording()
+    Label:
+        id: time_label
+        text: "Recording time: 0 seconds"

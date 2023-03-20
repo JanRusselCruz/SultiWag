@@ -1,0 +1,227 @@
+#:kivy 2.1.0
+#:import Factory kivy.factory.Factory
+WindowManager:
+    Dashboard:
+    Upload:
+    Complete:
+
+<Dashboard>:
+
+    name: "Dashboard"
+
+    FloatLayout:
+        
+        Image:
+            size_hint: 0.5, 0.5
+            pos_hint: {"x": 0.09, "y": 0.5}
+            source: 'assets/logo.png'
+        Label:
+            pos_hint: {"x": 0.09, "y": 0.24}
+            font_size: 20
+            bold: True
+            text: "SultiWag"
+            color: (244, 244, 244, 1)
+        Label:
+            pos_hint: {"x": 0.17, "y": 0.21}
+            text: "Indigenous Translator"
+            color: (244, 244, 244, 1)        
+        Button:
+            pos_hint: {"x": 0.27, "y": 0.36}
+            size_hint: 0.5, 0.08
+            color: (244, 244, 244, 1)
+            text: "Upload Audio Clip"
+            background_color: (221/255, 196/255, 133/255, 1)
+            background_normal: ""
+            on_release: 
+                app.root.current = "Upload"
+                root.manager.transition.direction = "left"
+
+<RoundedButton@Button>
+    background_color: (0, 0, 0, 0)
+    background_normal: ""
+    canvas.before:
+        Color:
+            rgba: (221/255, 196/255, 133/255, 1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [8]
+
+<Upload>:
+
+    name: "Upload"
+
+    canvas.before:
+        Color:
+            rgba: (221/255, 196/255, 133/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    
+    FloatLayout:
+        FileChooserListView:
+            id: files_list
+            path: "D:\Russel Files\Capstone\Audio Clips"
+            pos_hint: {"x":0, "y":0}
+
+        Button:
+            text: "Upload"
+            size_hint: (1, 0.05)
+            pos: 0,32
+            background_color:(0,0,0,0)
+            background_color: (221/255, 196/255, 133/255, 1)
+            on_release:
+                root.on_submit()
+
+        Button:
+            text: "Cancel"
+            size_hint: (1, 0.05)
+            pos_hint: {"right":1, "bottom":1}
+            background_color: (0,0,0,0)
+            background_color: (221/255, 196/255, 133/255, 1)
+            on_release:
+                app.root.current = "Dashboard"
+                root.manager.transition.direction = "right"
+
+<MyPopup@Popup>
+    auto_dismiss: False
+    size_hint: 0.7, 0.5
+    pos_hint: {"x": 0.2, "top": 0.9}
+    title: "Confirm"
+    AnchorLayout:
+        size_hint: 1,1
+        anchor_x: 'center'
+        anchor_y: 'center'
+        BoxLayout:
+            orientation: "horizontal"
+            Label:
+                text: "Do you want to upload this file?"
+            Button:
+                text: "Yes"
+                size_hint: 1, 0.05
+            Button:
+                id: no_btn
+                text: "No"
+                size_hint: 1, 0.05
+                pos_hint: {"right":1, "bottom":1}
+                on_release: root.dismiss()
+
+
+
+
+<Complete>:
+
+    name: "Complete"
+
+    canvas.before:
+        Color:
+            rgba: (221/255, 196/255, 133/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    FloatLayout:
+
+        Button:
+            size_hint: 0.11, 0.06
+            pos_hint: {"x": 0.04, "y": 0.92}
+            background_color: (221/255, 196/255, 133/255, 1)
+            background_normal: ""
+            on_release: 
+                app.root.current = "Dashboard"
+                root.manager.transition.direction = "right"
+        Image:
+            size_hint: 0.11, 0.4
+            pos_hint: {"x": 0.04, "y": 0.75}
+            source: 'assets/home.png'
+        Label:
+            pos_hint: {"x": 0.02, "y": 0.32}
+            font_size: 45
+            text: "COMPLETED"
+            color: (244, 244, 244, 1)
+
+        Label:
+            pos_hint: {"x": -0.24, "y": 0.20}
+            text: "Classified Language:"
+            font_size: 16
+            color: (244, 244, 244, 1)
+        BoxLayout:
+            size: 100, 200
+            pos: 100, 200
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Rectangle:
+                    size: 330, 48
+                    pos: 22, 405
+                
+            Label:
+                id: prediction_label
+                text: ""
+                pos_hint: {"x": .3, "y": -0.16}
+                color: 0, 0, 0, 1
+
+        Image:
+            size_hint: 0.16, 0.16
+            pos_hint: {"x": 0.05, "y": 0.56}
+            source: 'assets/logo.png'
+
+        Label:
+            pos_hint: {"x": -0.17, "y": 0.05}
+            text: "Transcribe Indigenous Word:"
+            font_size: 16
+            color: (244, 244, 244, 1)
+        BoxLayout:
+            size: 100, 200
+            pos: 100, 200
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Rectangle:
+                    size: 330, 48
+                    pos: 22, 305
+            Label:
+                id: trans_label
+                text: ""
+                pos_hint: {"x": .3, "y": -0.32}
+                color: 0, 0, 0, 1
+        
+        Image:
+            size_hint: 0.16, 0.16
+            pos_hint: {"x": 0.05, "y": 0.41}
+            source: 'assets/logo.png'
+
+        Label:
+            pos_hint: {"x": 0.-0.25, "y": -0.10}
+            text: "English Translation:"
+            font_size: 16
+            color: (244, 244, 244, 1)
+        BoxLayout:
+            size: 100, 200
+            pos: 100, 200
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Rectangle:
+                    size: 330, 48
+                    pos: 22, 205
+            Label:
+                id: english_label
+                text: ""
+                pos_hint: {"x": .3, "y": -0.48}
+                color: 0, 0, 0, 1 
+
+        Image:
+            size_hint: 0.16, 0.16
+            pos_hint: {"x": 0.05, "y": 0.26}
+            source: 'assets/logo.png'
+
+        Button:
+            pos_hint: {"x": 0.27, "y": 0.05}
+            size_hint: 0.5, 0.08
+            color: (244, 244, 244, 1)
+            text: "Finish"
+            background_color: (221/135, 196/135, 133/135, 1)
+            on_release: 
+                app.root.current = "Dashboard"
+                root.manager.transition.direction = "right"
